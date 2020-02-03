@@ -159,10 +159,12 @@ io.on('connection', socket => {
     connection.query(sqlSELECT2, function (err, result) {
       if (err) return console.log('ОШИБККА: ',err);
       for (let i = 0; i < result.length; i++) {
-        r.unshift({
-          name: result[i].name,
-          points: result[i].points
-        })
+        if(result[i].points > 0){
+          r.unshift({
+            name: result[i].name,
+            points: result[i].points
+          })
+        }
       }
       io.sockets.emit('setPointsRes', r);
     });
@@ -198,20 +200,7 @@ io.on('connection', socket => {
           color: result[i].color
         })
       }
-
-      let r = [];
-      let sqlSELECT2 = "SELECT * FROM users ORDER BY points DESC";
-      connection.query(sqlSELECT2, function (err, result) {
-        if (err) return console.log('ОШИБККА: ',err);
-        for (let i = 0; i < result.length; i++) {
-          r.unshift({
-            name: result[i].name,
-            points: result[i].points
-          })
-        }
-        socket.emit('PFM', {messeges:m, rating:r});
-      });
-
+      socket.emit('PFM', m);
     });
 
 

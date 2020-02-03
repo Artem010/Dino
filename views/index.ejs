@@ -99,14 +99,12 @@
     socket.on('setPointsRes', data =>{
       let bodyPoints = []
       data.forEach(function (entery, index) {
-        if(entery.points > 0){
-          if(userName == entery.name){
-            oldCounter = entery.points
-            // console.log('oldCounter=' +oldCounter)
-          }
+        if(userName == entery.name){
+          oldCounter = entery.points
           $('#oldCounter b').html(oldCounter)
-          bodyPoints.push("<p>"+(index+1) +") <b>"+entery.name+"</b>: "+entery.points+"</p>");
         }
+
+        bodyPoints.push("<p>"+(index+1) +") <b>"+entery.name+"</b>: "+entery.points+"</p>");
       })
 
       $('#rating').html(()=>{
@@ -120,7 +118,7 @@
     })
 
     socket.on('PFM', data =>{
-        data.messeges.forEach(function (entery) {
+        data.forEach(function (entery) {
           $('.messeges').append("<p style='background-color:"+entery.color+"' class='alert'><b>"+entery.name+"</b>: "+entery.msg+"</p>");
         })
       scrollButtom()
@@ -266,10 +264,8 @@
         if(Math.round(counter/10) > oldCounter){
           oldCounter = Math.round(counter/10)
           $('#oldCounter b').html(oldCounter)
-          socket.emit('updatedPointsRes', {name:userName})
           socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
-          // localStorage.setItem('count', Math.round(counter/10))
-          // console.log('add');
+          socket.emit('updatedPointsRes', {name:userName})
         }
 
 
