@@ -150,9 +150,39 @@ io.on('connection', socket => {
   })
 
   socket.on('newPointsRes', data =>{
-    addPointsDB(data.name, data.points)
+    // addPointsDB(data.name, data.points)
+
+    let sqlSELECT = "UPDATE users SET points=? WHERE name=?";
+    connection.query(sqlSELECT, [data.points,data.name], function (err, result) {
+      if (err) return console.log('ОШИБККА: ',err);
+        console.log(result.affectedRows + " record(s) updated");
+
+
+        let r = []
+        let sqlSELECT2 = "SELECT * FROM users ORDER BY points ";
+        connection.query(sqlSELECT2, function (err, result) {
+          if (err) return console.log('ОШИБККА: ',err);
+          for (let i = 0; i < result.length; i++) {
+            if(result[i].points > 0){
+              r.unshift({
+                name: result[i].name,
+                points: result[i].points
+              })
+            }
+          }
+          io.sockets.emit('setPointsRes', r);
+        });
+
+
+
+    });
+
+
+
+
 
   })
+
   socket.on('updatedPointsRes', data =>{
     let r = []
     let sqlSELECT2 = "SELECT * FROM users ORDER BY points ";
@@ -220,11 +250,11 @@ function regUserDB(login, name, password, color) {
 }
 
 function addPointsDB(name, points) {
-  let sqlSELECT = "UPDATE users SET points=? WHERE name=?";
-  connection.query(sqlSELECT, [points,name], function (err, result) {
-    if (err) return console.log('ОШИБККА: ',err);
-      console.log(result.affectedRows + " record(s) updated");
-  });
+  // let sqlSELECT = "UPDATE users SET points=? WHERE name=?";
+  // connection.query(sqlSELECT, [points,name], function (err, result) {
+  //   if (err) return console.log('ОШИБККА: ',err);
+  //     console.log(result.affectedRows + " record(s) updated");
+  // });
 }
 function addMsgDB(name, msg) {
   var id ='F';

@@ -248,9 +248,10 @@
     draw = ()=>{
 
       if(
-          ( (xpos1+new_cube1.width) >=50 && xpos1 <=82 ) && player.y >= (ypos1-new_cube1.height) ||
-          ( (xpos2+new_cube2.width) >=50 && xpos2 <=82 ) && player.y >= (ypos2-new_cube2.height) ||
-          ( (xpos3+new_cube3.width) >=50 && xpos3 <=82 ) && player.y >= (ypos3-new_cube3.height)
+          ( ( (xpos1+new_cube1.width) >=50 && xpos1 <=82 ) && player.y >= (ypos1-new_cube1.height) ||
+            ( (xpos2+new_cube2.width) >=50 && xpos2 <=82 ) && player.y >= (ypos2-new_cube2.height) ||
+            ( (xpos3+new_cube3.width) >=50 && xpos3 <=82 ) && player.y >= (ypos3-new_cube3.height)
+          ) && !endGame
         ){
 
         context.clearRect(0,0, windowWidth, windowHeight)
@@ -260,7 +261,7 @@
           oldCounter = Math.round(counter/10)
           $('#oldCounter b').html(oldCounter)
           socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
-          socket.emit('updatedPointsRes', {name:userName})
+          // socket.emit('updatedPointsRes', {name:userName})
         }
 
 
@@ -381,9 +382,11 @@
         player.ySpeed -= 20;
         player.jumping = true;
       }
+
       player.ySpeed += player.gravity;// gravity
       player.y += player.ySpeed;
       player.ySpeed *= 0.9;// friction
+
       if (player.y > context.canvas.height- 20 - 32) {
         player.jumping = false;
         player.y = context.canvas.height -20 - 32;
