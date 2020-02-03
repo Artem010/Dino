@@ -46,9 +46,7 @@ app.use(express.static('public'))
 app.get('/main.css', (req, res) => {
   res.sendFile(__dirname + '/main.css')
 })
-app.get('dino/control.css', (req, res) => {
-  res.sendFile(__dirname + '/dino/control.css')
-})
+
 
 app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name, color: req.user.color })
@@ -68,9 +66,7 @@ app.post('/login', getUser, checkNotAuthenticated, passport.authenticate('local'
 app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('register.ejs')
 })
-app.get('/dino', checkAuthenticated, (req, res) => {
-  res.render('dino.ejs')
-})
+
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
@@ -241,7 +237,7 @@ io.on('connection', socket => {
 
 function regUserDB(login, name, password, color) {
 
-  let sqlINSERT = "INSERT INTO users(login, name, password, color) VALUES (?, ?, ?, ?)";
+  let sqlINSERT = "INSERT INTO users(login, name, password, color, points) VALUES (?, ?, ?, ?,0)";
   connection.query(sqlINSERT, [login, name, password, color], function (err, result) {
     if (err) return console.log('ОШИБККА: ',err);
     console.log("User registered");
