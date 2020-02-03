@@ -164,7 +164,7 @@ io.on('connection', socket => {
           points: result[i].points
         })
       }
-      socket.emit('setPointsRes', r);
+      io.sockets.emit('setPointsRes', r);
     });
   })
 

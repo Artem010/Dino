@@ -25,9 +25,9 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-md-8">
+      <div class="gameField col-md-8">
 
-        <h1>My - Control</h1>
+        <h1 class="helloDiv" >Hi<b> <%= name %></b><a class="logout" href="/logout"> LogOut</a></h1>
         <div class="containers">
           <div class="textMenu">
             <b id="counter">0</b>
@@ -52,8 +52,7 @@
           <button type="submit" class="btn btn-danger" value="Send">Send</button>
         </form>
 
-        <b>Hi <%= name %></b>
-        <a href="/logout"> LogOut</a>
+
         <a tabindex="0" class="online" role="button" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="">
           <span>Online:</span><b></b>
         </a>
@@ -115,7 +114,7 @@
         bodyPoints.forEach(function (i) {
           it+=i
         });
-        console.log('UPDATE_POINTS')
+        console.log('UPDATED_POINTS')
         return it
       })
     })
@@ -205,7 +204,6 @@
 
     restartGame = (e)=>{
       counter = 0
-      $('#oldCounter b').html(oldCounter)
       restartBtn.removeClass('show')
       endGame =false
       xpos1 = cube1.x + dist
@@ -266,11 +264,12 @@
         endGame = true
         restartBtn.addClass('show')
         if(Math.round(counter/10) > oldCounter){
-          socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
-          socket.emit('updatedPointsRes', {name:userName})
-          // localStorage.setItem('count', Math.round(counter/10))
           oldCounter = Math.round(counter/10)
-          console.log('add');
+          $('#oldCounter b').html(oldCounter)
+          socket.emit('updatedPointsRes', {name:userName})
+          socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
+          // localStorage.setItem('count', Math.round(counter/10))
+          // console.log('add');
         }
 
 
@@ -472,9 +471,9 @@
 
 
 
-    window.addEventListener("touchstart", controller.listener)
+    $('.gameField').on("touchstart", controller.listener)
 
-    window.addEventListener("touchend", controller.listener)
+    $('.gameField').on("touchend", controller.listener)
     window.addEventListener("keydown", controller.listener)
     window.addEventListener("keyup", controller.listener)
 

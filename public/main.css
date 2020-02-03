@@ -22,3 +22,11 @@
 .online span{
   color: blue!important;
 }
+.helloDiv{
+  
+}
+.logout{
+  /* position: absolute; */
+  float: right;
+  z-index: 100
+}
