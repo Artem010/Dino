@@ -158,7 +158,6 @@
     let startBtn = $('#startBtn')
     let counterB = document.getElementById('counter')
     let canvas = $('#cnv')[0]
-    console.log(canvas);
     let context = canvas.getContext('2d')
 
     let device
@@ -208,8 +207,8 @@
       xpos2 = xpos1 + cube2.x + dist
       xpos3 = xpos2 + cube3.x + dist
       ypos1 = cube1.y
-      ypos2 = cube1.y
-      ypos3 = cube1.y
+      ypos2 = cube2.y
+      ypos3 = cube3.y
       console.log('restart');
     }
     function rnd(min,max){return Math.floor(Math.random() * (max- 0) + min)}
@@ -236,8 +235,6 @@
       x: canvas.width,
       y: canvas.height-20-50
     }
-
-
 
     controller = {
       up:false,
@@ -470,8 +467,8 @@
     $('.gameField').on("touchstart", controller.listener)
 
     $('.gameField').on("touchend", controller.listener)
-    window.addEventListener("keydown", controller.listener)
-    window.addEventListener("keyup", controller.listener)
+    // window.addEventListener("keydown", controller.listener)
+    // window.addEventListener("keyup", controller.listener)
 
 
 
