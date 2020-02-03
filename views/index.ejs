@@ -98,14 +98,14 @@
 
     socket.on('setPointsRes', data =>{
       let bodyPoints = []
-      data.forEach(function (entery) {
+      data.forEach(function (entery, index) {
         if(entery.points > 0){
           if(userName == entery.name){
             oldCounter = entery.points
             // console.log('oldCounter=' +oldCounter)
           }
           $('#oldCounter b').html(oldCounter)
-          bodyPoints.push("<p><b>"+entery.name+"</b>: "+entery.points+"</p>");
+          bodyPoints.push("<p>"+(index+1) +") <b>"+entery.name+"</b>: "+entery.points+"</p>");
         }
       })
 
