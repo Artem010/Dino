@@ -12,14 +12,14 @@
   margin:0;
   padding:0;
 
-  -ms-user-select: none;
+  /* -ms-user-select: none;
 
   -moz-user-select: none;
 
   -khtml-user-select: none;
 
   -webkit-user-select: none;
-}
+} */
 
 html, body {
 
@@ -61,7 +61,7 @@ canvas {
   border: none;
   padding: 5px;
 }
-button::after{
+.containers button::after{
   text-decoration: none
 }
 .gameBtn :hover{
