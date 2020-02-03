@@ -427,13 +427,18 @@
     let rndCubes1 = rnd(1,3);
     let rndCubes2 = rnd(1,3);
     let rndCubes3 = rnd(1,3);
+
+    let rndPixels1 = rnd(-450,450);
+    let rndPixels2 = rnd(-450,450);
+    let rndPixels3 = rnd(-450,450);
+
     console.log('rndCubes1=' + rndCubes1);
     console.log('rndCubes2=' + rndCubes2);
     console.log('rndCubes3=' + rndCubes3);
 
-    xpos1 = cube1.x + dist
-    xpos2 = xpos1 + cube2.x + dist
-    xpos3 = xpos2 + cube3.x + dist
+    xpos1 = cube1.x + dist + rndPixels1
+    xpos2 = xpos1 + cube2.x + dist + rndPixels2
+    xpos3 = xpos2 + cube3.x + dist + rndPixels3
     // console.log('xpos1=' + xpos1);  //750
     // console.log('xpos2=' + xpos2);  //1500
     // console.log('xpos3=' + xpos3);  //2250
