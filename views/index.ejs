@@ -81,7 +81,6 @@
 
 
 
-
     const socket = io.connect()
     let oldCounter= 0
     socket.emit('updatedPointsRes', {name:userName})
@@ -153,10 +152,11 @@
       scrollButtom()
     })
 
+/*
 
     let restartBtn = $('#restartBtn')
     let startBtn = $('#startBtn')
-    let counterB = document.getElementById('counter')
+    let counterB = $('#counter')
     let canvas = $('#cnv')[0]
     let context = canvas.getContext('2d')
 
@@ -470,7 +470,7 @@
     // window.addEventListener("keydown", controller.listener)
     // window.addEventListener("keyup", controller.listener)
 
-
+*/
 
 
 
