@@ -50,7 +50,7 @@ canvas {
   width: 100%;
   height: 250px;
 }
-.container span{
+.containers span{
   color: black;
   z-index: 100;
 }
