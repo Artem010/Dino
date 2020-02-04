@@ -148,7 +148,7 @@
 
         console.log(data.online)
 
-      $('.messeges').append("<div class='alert'><b>"+data.name+"</b> "+ data.value+"</div>")
+      $('.messeges').append("<div class='alert text-center connectDisconnect'><b>"+data.name+"</b> "+ data.value+"</div>")
       scrollButtom()
     })
 
@@ -285,6 +285,8 @@
           $('#oldCounter b').html(oldCounter)
           socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
           // socket.emit('updatedPointsRes', {name:userName})
+        }else{
+           socket.emit('newMessegePoints', {name:userName, msg:'my result:' + Math.round(counter/10) })
         }
 
 

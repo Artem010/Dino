@@ -23,10 +23,14 @@
   color: blue!important;
 }
 .helloDiv{
-  
+
 }
 .logout{
   /* position: absolute; */
   float: right;
   z-index: 100
+}
+.connectDisconnect{
+  padding: 0;
+  margin: 0;
 }

@@ -201,6 +201,10 @@ io.on('connection', socket => {
     io.sockets.emit('Addmessage', {color:data.color, name:data.name, msg:data.msg})
   })
 
+  socket.on('newMessegePoints', data =>{
+    io.sockets.emit('Addmessage', {name:data.name, msg:data.msg})
+  })
+
   socket.on('startSettings', data =>{
 
     online.push({
