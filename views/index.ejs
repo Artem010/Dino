@@ -162,15 +162,36 @@
     let device
     let windowWidth
     let speed = 3;
-    let player = {
+
+
+
+    let spritePlayer = new Image()
+    spritePlayer.src = 'player2d.png';
+    let xxxx = 0, tickCount =0
+    player = {
+      img: spritePlayer,
       x: 50,
-      y: canvas.height+50,
-      width:32,
-      height:32,
+      y: canvas.height-20-80,
+      width:80,
+      height:80,
       ySpeed:0,
       jumping:false,
       gravity:0.75
     }
+
+    //
+    //
+    // let player = {
+    //   x: 50,
+    //   y: canvas.height+50,
+    //   width:32,
+    //   height:32,
+    //   ySpeed:0,
+    //   jumping:false,
+    //   gravity:0.75
+    // }
+
+
     if(window.screen.width < 600){
       windowWidth = window.screen.width
       device = 'phone'
@@ -221,7 +242,7 @@
       y: canvas.height-20-32
     }
     let cube2 = {
-      width:50,
+      width:40,
       height:20,
       x: canvas.width,
       y: canvas.height-20-20
@@ -229,10 +250,12 @@
     }
     let cube3 = {
       width:20,
-      height:50,
+      height:40,
       x: canvas.width,
-      y: canvas.height-20-50
+      y: canvas.height-20-40
     }
+
+
 
     controller = {
       up:false,
@@ -248,9 +271,9 @@
     draw = ()=>{
 
       if(
-          ( ( (xpos1+new_cube1.width) >=50 && xpos1 <=82 ) && player.y >= (ypos1-new_cube1.height) ||
-            ( (xpos2+new_cube2.width) >=50 && xpos2 <=82 ) && player.y >= (ypos2-new_cube2.height) ||
-            ( (xpos3+new_cube3.width) >=50 && xpos3 <=82 ) && player.y >= (ypos3-new_cube3.height)
+          ( ( (xpos1+new_cube1.width) >=50 && xpos1 <=105 ) && player.y >= (ypos1-new_cube1.height) ||
+            ( (xpos2+new_cube2.width) >=50 && xpos2 <=105 ) && player.y >= (ypos2-new_cube2.height) ||
+            ( (xpos3+new_cube3.width) >=50 && xpos3 <=105 ) && player.y >= (ypos3-new_cube3.height)
           ) && !endGame
         ){
 
@@ -267,7 +290,18 @@
 
       }else if (!endGame){
         context.clearRect(0,0, windowWidth, windowHeight)
-        context.fillRect(player.x, player.y, player.width, player.height) //CREATE PLAYER
+
+
+        if(tickCount > 5){
+          tickCount = 0
+          xxxx = (xxxx >= 603 ? 0 : (xxxx+268) )
+        }
+
+        context.drawImage(player.img, xxxx, 0, 220, 280, player.x, player.y-45, player.width, player.height)
+        tickCount++
+
+
+        // context.fillRect(player.x, player.y, player.width, player.height) //CREATE PLAYER
 
         context.beginPath();
         context.moveTo(0, context.canvas.height-20);
@@ -379,7 +413,7 @@
     let updateCube = () =>{
       requestAnimationFrame(updateCube)
       if (controller.up && player.jumping == false) {
-        player.ySpeed -= 20;
+        player.ySpeed -= 23;
         player.jumping = true;
       }
 
@@ -395,20 +429,20 @@
 
 
       if(xpos1 < -cube1.width && !endGame){
-        rndPixels1 = rnd(-450,450);
+        rndPixels1 = rnd(-350,350);
         rndCubes1 = rnd(1,3);
         xpos1 = xpos3+cube1.x + dist + rndPixels1
         console.log('rndCubes1=' + rndCubes1);
 
 
       }else if(xpos2 < -cube2.width && !endGame){
-        rndPixels2 = rnd(-450,450);
+        rndPixels2 = rnd(-350,350);
         rndCubes2 = rnd(1,3);
         xpos2 = xpos1+ cube2.x + dist + rndPixels2
         console.log('rndCubes2=' + rndCubes2);
 
       }else if(xpos3 < -cube3.width && !endGame){
-        rndPixels3 = rnd(-450,450);
+        rndPixels3 = rnd(-350,350);
         rndCubes3 = rnd(1,3);
         xpos3 = xpos2+ cube3.x +dist + rndPixels3
         console.log('rndCubes3=' + rndCubes3);
