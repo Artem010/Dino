@@ -235,24 +235,33 @@
     canvas.width = windowWidth
     canvas.height = 250
     canvas.style.background = '#ff8'
+
+    let spriteStone = new Image()
+    spriteStone.src = 'stone.png';
+
     let cube1 = {
-      width:16,
-      height:32,
+      img: spriteStone,
+      width:30,
+      height:30,
       x: canvas.width,
-      y: canvas.height-20-32
+      y: canvas.height-20-27
     }
+
     let cube2 = {
+      img: spriteStone,
       width:40,
-      height:20,
+      height:30,
       x: canvas.width,
-      y: canvas.height-20-20
+      y: canvas.height-20-27
 
     }
+
     let cube3 = {
-      width:20,
-      height:40,
+      img: spriteStone,
+      width:30,
+      height:35,
       x: canvas.width,
-      y: canvas.height-20-40
+      y: canvas.height-20-33
     }
 
 
@@ -285,9 +294,11 @@
           $('#oldCounter b').html(oldCounter)
           socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
           // socket.emit('updatedPointsRes', {name:userName})
+          socket.emit('newMessegePoints', {name:userName, msg:'NEW RECORD:' + Math.round(counter/10) })
         }else{
-           socket.emit('newMessegePoints', {name:userName, msg:'my result:' + Math.round(counter/10) })
+          socket.emit('newMessegePoints', {name:userName, msg:'my result:' + Math.round(counter/10) })
         }
+
 
 
       }else if (!endGame){
@@ -317,7 +328,8 @@
               height: cube1.height,
               y: cube1.y
             }
-            context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            // context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos1, new_cube1.y, new_cube1.width, new_cube1.height)
             break;
           case 2:
            new_cube1 = {
@@ -325,7 +337,8 @@
               height: cube2.height,
               y: cube2.y
             }
-            context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            // context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos1, new_cube1.y, new_cube1.width, new_cube1.height)
             break;
           case 3:
             new_cube1 = {
@@ -333,7 +346,8 @@
               height: cube3.height,
               y: cube3.y
             }
-            context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            // context.fillRect(xpos1, new_cube1.y, new_cube1.width, new_cube1.height) //CREATE CUBES1
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos1, new_cube1.y, new_cube1.width, new_cube1.height)
             break;
         }
 
@@ -344,7 +358,8 @@
               height: cube1.height,
               y: cube1.y
             }
-            context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            // context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos2, new_cube2.y, new_cube2.width, new_cube2.height)
             break;
           case 2:
              new_cube2 = {
@@ -352,7 +367,8 @@
               height: cube2.height,
               y: cube2.y
             }
-            context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            // context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos2, new_cube2.y, new_cube2.width, new_cube2.height)
             break;
           case 3:
              new_cube2 = {
@@ -360,7 +376,8 @@
               height: cube3.height,
               y: cube3.y
             }
-            context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            // context.fillRect(xpos2 , new_cube2.y, new_cube2.width, new_cube2.height) //CREATE CUBES2
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos2, new_cube2.y, new_cube2.width, new_cube2.height)
             break;
         }
 
@@ -372,7 +389,8 @@
               y: cube1.y
             }
 
-            context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            // context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos3, new_cube3.y, new_cube3.width, new_cube3.height)
             break;
           case 2:
             new_cube3 = {
@@ -380,7 +398,8 @@
               height: cube2.height,
               y: cube2.y
             }
-            context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            // context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos3, new_cube3.y, new_cube3.width, new_cube3.height)
             break;
           case 3:
             new_cube3 = {
@@ -388,7 +407,8 @@
               height: cube3.height,
               y: cube3.y
             }
-            context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            // context.fillRect(xpos3 , new_cube3.y, new_cube3.width, new_cube3.height) //CREATE CUBES3
+            context.drawImage(cube1.img, 0, 0, 50, 50, xpos3, new_cube3.y, new_cube3.width, new_cube3.height)
             break;
         }
 
