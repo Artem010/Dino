@@ -202,7 +202,9 @@ io.on('connection', socket => {
   })
 
   socket.on('newMessegePoints', data =>{
-    io.sockets.emit('Addmessage', {name:data.name, msg:data.msg})
+    if(data.val){
+      io.sockets.emit('Addmessage', {name:data.name, msg:data.msg, val:data.val})
+    }
   })
 
   socket.on('startSettings', data =>{

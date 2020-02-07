@@ -34,3 +34,11 @@
   padding: 0;
   margin: 0;
 }
+.newRecord{
+  color: #ff13f8;
+  font-weight: 700;
+}
+.myResult{
+  color: black;
+  font-weight: 700;
+}

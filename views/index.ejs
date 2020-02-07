@@ -124,7 +124,13 @@
     })
     socket.on('Addmessage', data =>{
       // console.log('message: ' + msg);
-      $('.messeges').append("<div style='background-color:"+data.color+"' class='alert'><b>"+data.name+"</b>: "+data.msg+"</div>")
+      if(data.val == 'newRecord'){
+        $('.messeges').append("<div class='alert newRecord'><b>"+data.name+"</b>: "+data.msg+"</div>")
+      }else if(data.val == 'myResult'){
+        $('.messeges').append("<div class='alert myResult'><b>"+data.name+"</b>: "+data.msg+"</div>")
+      }else{
+        $('.messeges').append("<div style='background-color:"+data.color+"' class='alert'><b>"+data.name+"</b>: "+data.msg+"</div>")
+      }
       scrollButtom()
     })
 
@@ -294,9 +300,9 @@
           $('#oldCounter b').html(oldCounter)
           socket.emit('newPointsRes', {name:userName,points:Math.round(counter/10)})
           // socket.emit('updatedPointsRes', {name:userName})
-          socket.emit('newMessegePoints', {name:userName, msg:'NEW RECORD:' + Math.round(counter/10) })
+          socket.emit('newMessegePoints', {name:userName, msg:'New record: ' + Math.round(counter/10),val:'newRecord'})
         }else{
-          socket.emit('newMessegePoints', {name:userName, msg:'my result:' + Math.round(counter/10) })
+          socket.emit('newMessegePoints', {name:userName, msg:'My result: ' + Math.round(counter/10),val:'myResult' })
         }
 
 
