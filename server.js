@@ -124,7 +124,14 @@ function getUser(req, res, next) {
 
 server.listen(3000)
 
-let online =[]
+let online = []
+let maxOnline;
+
+let sqlSELECT = "SELECT * FROM settings maxOnline";
+connection.query(sqlSELECT, (err, result) => {
+  maxOnline = result[0].maxOnline;
+  console.log(result[0].maxOnline);
+})
 
 io.on('connection', socket => {
 
@@ -213,6 +220,10 @@ io.on('connection', socket => {
       socket:socket,
       name:data.name
     })
+
+    if(online.length > maxOnline){
+      addMaxOnlineDB(online.length)
+    }
     let usersOn = []
     for (let i = 0; i < online.length; i++) {
       usersOn.push(online[i].name)
@@ -295,4 +306,16 @@ function findUserDB(login, resolve) {
     resolve(true)
     // console.log('users=',users)
   })
+}
+
+function addMaxOnlineDB(onlineLength) {
+
+  // let sqlINSERT = "INSERT INTO settings(maxOnline) VALUES(?)";
+  let sqlINSERT = "UPDATE settings SET maxOnline=?";
+  connection.query(sqlINSERT, onlineLength, (err, result) => {
+    if (err) return console.log('ОШИБККА: ',err)
+    console.log("Added maxOnline")
+  });
+
+
 }
