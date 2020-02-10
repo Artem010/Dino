@@ -159,21 +159,57 @@
     })
 
 
-    let restartBtn = $('#restartBtn')
-    let startBtn = $('#startBtn')
-    let counterB = $('#counter')
-    let canvas = $('#cnv')[0]
-    let context = canvas.getContext('2d')
+//GAME SCRIPT
 
-    let device
-    let windowWidth
-    let speed = 3;
+    let
+      restartBtn = $('#restartBtn'),
+      startBtn = $('#startBtn'),
+      counterB = $('#counter'),
+      canvas = $('#cnv')[0],
+      windowHeight = window.screen.height,
+      context = canvas.getContext('2d'),
+      device,
+      windowWidth,
+      speed = 3,
+      dist = 150,
+      xpos1 = 0,
+      xpos2 = 0,
+      xpos3 = 0,
+      ypos = 0,
+      endGame = false,
+      cubes =[],
+      counter= 0,
+      xxxx = 0,
+      tickCount =0,
+      rndCubes1 = rnd(1,3),
+      rndCubes2 = rnd(1,3),
+      rndCubes3 = rnd(1,3),
+      rndPixels1 = rnd(-200,450),
+      rndPixels2 = rnd(-450,450),
+      rndPixels3 = rnd(-450,450),
+      spritePlayer = new Image(),
+      spriteStone = new Image()
 
+    var
+      new_cube1 = {
+        width: 0,
+        height: 0,
+        y: 0
+      },
+      new_cube2 = {
+        width: 0,
+        height: 0,
+        y: 0
+      },
+      new_cube3 = {
+        width: 0,
+        height: 0,
+        y: 0
+      }
 
-
-    let spritePlayer = new Image()
+    spriteStone.src = 'stone.png';
     spritePlayer.src = 'player2d.png';
-    let xxxx = 0, tickCount =0
+
     player = {
       img: spritePlayer,
       x: 50,
@@ -182,47 +218,56 @@
       height:80,
       ySpeed:0,
       jumping:false,
-      gravity:0.75
+      gravity:0.60
     }
-
-    //
-    //
-    // let player = {
-    //   x: 50,
-    //   y: canvas.height+50,
-    //   width:32,
-    //   height:32,
-    //   ySpeed:0,
-    //   jumping:false,
-    //   gravity:0.75
-    // }
 
 
     if(window.screen.width < 600){
       windowWidth = window.screen.width
       device = 'phone'
       player.gravity = 0.55
-      if (windowWidth >=350 && windowWidth < 600) speed = 2.3
+      if (windowWidth >=350 && windowWidth < 600) speed = 2.25
     }else{
       device = 'pc'
       windowWidth = 600
     }
-    const windowHeight = window.screen.height
 
-    let dist = 150
-    let xpos1 = 0
-    let xpos2 = 0
-    let xpos3 = 0
-    let ypos = 0
-    let endGame = false
-    let cubes =[]
-    let counter= 0
-    // if(!oldCounter){
-    //   // oldCounter=localStorage.getItem('count')
-    // }else
+    canvas.width = windowWidth
+    canvas.height = 250
+    canvas.style.background = '#ff8'
 
-    // localStorage.setItem('count', 0)
 
+
+
+    let
+      cube1 = {
+        img: spriteStone,
+        width:30,
+        height:30,
+        x: canvas.width,
+        y: canvas.height-20-27
+      },
+      cube2 = {
+        img: spriteStone,
+        width:40,
+        height:30,
+        x: canvas.width,
+        y: canvas.height-20-27
+
+      },
+      cube3 = {
+        img: spriteStone,
+        width:30,
+        height:35,
+        x: canvas.width,
+        y: canvas.height-20-33
+      }
+    xpos1 = cube1.x + dist + rndPixels1
+    xpos2 = xpos1 + cube2.x + dist + rndPixels2
+    xpos3 = xpos2 + cube3.x + dist + rndPixels3
+    ypos1 = cube1.y
+    ypos2 = cube1.y
+    ypos3 = cube1.y
 
     restartGame = (e)=>{
       counter = 0
@@ -238,47 +283,17 @@
     }
     function rnd(min,max){return Math.floor(Math.random() * (max- 0) + min)}
 
-    canvas.width = windowWidth
-    canvas.height = 250
-    canvas.style.background = '#ff8'
 
-    let spriteStone = new Image()
-    spriteStone.src = 'stone.png';
 
-    let cube1 = {
-      img: spriteStone,
-      width:30,
-      height:30,
-      x: canvas.width,
-      y: canvas.height-20-27
-    }
 
-    let cube2 = {
-      img: spriteStone,
-      width:40,
-      height:30,
-      x: canvas.width,
-      y: canvas.height-20-27
-
-    }
-
-    let cube3 = {
-      img: spriteStone,
-      width:30,
-      height:35,
-      x: canvas.width,
-      y: canvas.height-20-33
-    }
 
 
 
     controller = {
       up:false,
       listener: (e)=>{
-        if( (e.type == 'keydown' && (e.keyCode == 38 || e.keyCode == 32) ) || e.type == 'touchstart' ){
-          controller.up = true
-          // console.log('SpeedGame='+speed+(0.5*counter/1000));
-        }else controller.up = false
+        if( (e.type == 'keydown' && (e.keyCode == 38 || e.keyCode == 32) ) || e.type == 'touchstart' ) controller.up = true
+        else controller.up = false
       }
     }
 
@@ -310,7 +325,6 @@
       }else if (!endGame){
         context.clearRect(0,0, windowWidth, windowHeight)
 
-
         if(tickCount > 5){
           tickCount = 0
           xxxx = (xxxx >= 603 ? 0 : (xxxx+268) )
@@ -319,14 +333,12 @@
         context.drawImage(player.img, xxxx, 0, 220, 280, player.x, player.y-45, player.width, player.height)
         tickCount++
 
-
-        // context.fillRect(player.x, player.y, player.width, player.height) //CREATE PLAYER
-
         context.beginPath();
         context.moveTo(0, context.canvas.height-20);
         context.lineTo(context.canvas.width, context.canvas.height-20);
         context.stroke();
 
+//CREATE CUBES
         switch (rndCubes1) {
           case 1:
             new_cube1 = {
@@ -417,18 +429,10 @@
             context.drawImage(cube1.img, 0, 0, 50, 50, xpos3, new_cube3.y, new_cube3.width, new_cube3.height)
             break;
         }
-
-
-
+//CREATE CUBES
 
         counter++
         $('#counter').html(Math.round(counter/10))
-        // console.log('counter=' + Math.round(counter/10));
-
-
-      }else{
-
-        // console.log('end');
       }
     }
 
@@ -438,108 +442,54 @@
       updateCube()
     })
 
-    let updateCube = () =>{
+    updateCube = () =>{
+
       requestAnimationFrame(updateCube)
+
       if (controller.up && player.jumping == false) {
-        player.ySpeed -= 23;
-        player.jumping = true;
+        player.ySpeed -= 23
+        player.jumping = true
       }
 
-      player.ySpeed += player.gravity;// gravity
-      player.y += player.ySpeed;
-      player.ySpeed *= 0.9;// friction
+      player.ySpeed += player.gravity // gravity
+      player.y += player.ySpeed
+      player.ySpeed *= 0.9 // friction
 
       if (player.y > context.canvas.height- 20 - 32) {
-        player.jumping = false;
-        player.y = context.canvas.height -20 - 32;
-        player.ySpeed = 0;
+        player.jumping = false
+        player.y = context.canvas.height -20 - 32
+        player.ySpeed = 0
       }
 
 
       if(xpos1 < -cube1.width && !endGame){
-        rndPixels1 = rnd(-350,350);
-        rndCubes1 = rnd(1,3);
+        rndPixels1 = rnd(-350,350)
+        rndCubes1 = rnd(1,3)
         xpos1 = xpos3+cube1.x + dist + rndPixels1
-        console.log('rndCubes1=' + rndCubes1);
-
-
       }else if(xpos2 < -cube2.width && !endGame){
-        rndPixels2 = rnd(-350,350);
-        rndCubes2 = rnd(1,3);
+        rndPixels2 = rnd(-350,350)
+        rndCubes2 = rnd(1,3)
         xpos2 = xpos1+ cube2.x + dist + rndPixels2
-        console.log('rndCubes2=' + rndCubes2);
-
       }else if(xpos3 < -cube3.width && !endGame){
-        rndPixels3 = rnd(-350,350);
-        rndCubes3 = rnd(1,3);
+        rndPixels3 = rnd(-350,350)
+        rndCubes3 = rnd(1,3)
         xpos3 = xpos2+ cube3.x +dist + rndPixels3
-        console.log('rndCubes3=' + rndCubes3);
-
       }else{
         xpos1 -= (speed+(0.5*counter/1000))
         xpos2 -= (speed+(0.5*counter/1000))
         xpos3 -= (speed+(0.5*counter/1000))
       }
+
       draw()
     }
 
 
 
-    // var rndPixels1 = rnd(100,250);
-    // var rndPixels2 = rnd(300,450);
-    // var rndPixels3 = rnd(500,600);
-    let rndCubes1 = rnd(1,3);
-    let rndCubes2 = rnd(1,3);
-    let rndCubes3 = rnd(1,3);
-
-    let rndPixels1 = rnd(-200,450);
-    let rndPixels2 = rnd(-450,450);
-    let rndPixels3 = rnd(-450,450);
-
-    console.log('rndCubes1=' + rndCubes1);
-    console.log('rndCubes2=' + rndCubes2);
-    console.log('rndCubes3=' + rndCubes3);
-
-    xpos1 = cube1.x + dist + rndPixels1
-    xpos2 = xpos1 + cube2.x + dist + rndPixels2
-    xpos3 = xpos2 + cube3.x + dist + rndPixels3
-    // console.log('xpos1=' + xpos1);  //750
-    // console.log('xpos2=' + xpos2);  //1500
-    // console.log('xpos3=' + xpos3);  //2250
-
-    ypos1 = cube1.y
-    ypos2 = cube1.y
-    ypos3 = cube1.y
-
-    var new_cube1 = {
-      width: 0,
-      height: 0,
-      y: 0
-    }
-    var new_cube2 = {
-      width: 0,
-      height: 0,
-      y: 0
-    }
-    var new_cube3 = {
-      width: 0,
-      height: 0,
-      y: 0
-    }
-    // let new_cube2
-    // let new_cube3
-
-
-
 
     $('.gameField').on("touchstart", controller.listener)
-
     $('.gameField').on("touchend", controller.listener)
     window.addEventListener("keydown", controller.listener)
     window.addEventListener("keyup", controller.listener)
-
-
-
 
 
   })
@@ -547,6 +497,5 @@
 
 
   </script>
-  <!-- <script src="game.js" type="text/javascript"></script> -->
 </body>
 </html>
